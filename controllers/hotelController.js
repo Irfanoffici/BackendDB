@@ -24,8 +24,23 @@ exports.createHotels = (request,response)=>{
     //         }
     //     })
     // })
-}
+    try{
+    const hotel = Hotel(req,body);
+    await hotel.save()
 
+    req.status(201).json({
+        status:"success",
+        data:{
+            hotel:hotel
+        }
+    })
+}catch(error){
+    req.status(400).json({
+        status:"fail",
+        message:error.message
+    })
+}
+}
 exports.validateHotelData = (request,response,next) => {
 
     // const body = request.body;
@@ -111,3 +126,4 @@ exports.checkHotelExists = (req,res,next,id) => {
     // }
     // next();
 }
+
