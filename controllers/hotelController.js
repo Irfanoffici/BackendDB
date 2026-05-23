@@ -1,4 +1,6 @@
 const fs = require('fs');
+
+const { Hotel } = require('../models/hotels');
 let hotels = JSON.parse(fs.readFileSync('./data/hotels.json', 'utf8'));
 exports.getAllHotels = (request,response)=>{
     // response.status(200).json({
@@ -9,37 +11,25 @@ exports.getAllHotels = (request,response)=>{
     //     }
     // })
 }
-exports.createHotels = (request,response)=>{
-    // console.log(request.body);
-    // const newId = hotels[hotels.length-1].id+1;
-    // const newHotel = Object.assign({id:newId},request.body);
-    // console.log(newHotel);
-    // hotels.push(newHotel);
-    
-    // fs.writeFile('./data/hotels.json',JSON.stringify(hotels),()=>{
-    //     response.status(201).json({
-    //         status:"success",
-    //         data:{
-    //             hotel:newHotel
-    //         }
-    //     })
-    // })
-    try{
-    const hotel = Hotel(req,body);
-    await hotel.save()
+exports.createHotels = async (req, res) => {
+    try {
+        // const hotel = Hotel(req.body);
+        // const newhotel = await hotel.save()
+        const hotel = await Hotel.create(req.body);
+        res.status(201).json({
+            status: 'success',
+            data: {
+                hotel: hotel
+            }
 
-    req.status(201).json({
-        status:"success",
-        data:{
-            hotel:hotel
-        }
-    })
-}catch(error){
-    req.status(400).json({
-        status:"fail",
-        message:error.message
-    })
-}
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            status: 'Fail',
+            message: 'Failed to create a Document'
+        })
+    }
 }
 exports.validateHotelData = (request,response,next) => {
 
