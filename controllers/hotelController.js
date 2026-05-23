@@ -54,65 +54,65 @@ exports.createHotel = async (req, res) => {
 
 // }
 
-exports.getHotelById=(request,response)=>{
-// const id = +request.params.id*1
-// const hotel = hotels.find((item)=> item.id===id)
-// // if(!hotel){
-// //         response.status(404).json({
-// //             "status":"Fail",
-// //             "message":"no data found"
-// //         })
-// //     }
-//     response.status(200).json({
-//     status:"success",
-//     data:{
-//         hotel:hotel
-//     }
-// })
-}
+exports.getHotelById = async (req, res) => {
 
-exports.updatedHotel=(request,response)=>{
-    // request.params
-    // const id = +request.params.id
-    // const hotelToUpdate = hotels.find(item => item.id==id)
-    // // if(!hotel){
-    // //     response.status(404).json({
-    // //         "status":"Fail",
-    // //         "message":"no data found"
-    // //     })
-    // // }
-    // const body = request.body
-    // const updatedHotel = Object.assign(hotelToUpdate,body)
+    try {
+        const id = req.params.id;
+        const hotel = await Hotel.findById(id);
+        res.status(200).json({
+            status: "success",
+            data: {
+                hotel
+            }
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: "Fail",
+            message: error.message
+        });
+    }
+};
 
-    // fs.writeFile('./data/hotels.json',JSON.stringify(hotels),()=>{
-    //     response.status(200).json({
-    //         status:"success",
-    //         data:{
-    //             hotel:updatedHotel
-    //         }
-    //     })
-    // })
-}
+exports.updatedHotel = async (req, res) => {
+
+    try {
+
+        const hotel = await Hotel.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        );
+        res.status(200).json({
+            status: "success",
+            data: {
+                hotel
+            }
+        });
+    } catch (error) {
+        res.status(500).json({
+            status: "Fail",
+            message: error.message
+        });
+    }
+};
 
 
-exports.deleteHotel = (request,response)=>{
-//     const id = request.params.id*1
-//     const hotelToDelete = hotels.find((item)=>item.id===id)
-//     // if(!hotelToDelete){
-//     //     response.status(404).json({
-//     //         "status":"Fail",
-//     //         "message":"no data found"
-//     //     })
-//     // }
-//     const index = hotels.indexOf(hotelToDelete)
-//     hotels.splice(index,1)
+exports.deleteHotel = async (req, res) => {
+    try {
+        const id = req.params.id;
+        await Hotel.deleteOne({ _id: id });
+        res.status(200).json({
+            status: 'success',
+            message: 'Data Deleted successfuly'
+        })
 
-//     fs.writeFile('./data/hotels.json',JSON.stringify(hotels),()=>{
-//          response.status(200).json({
-//     "status":"success",
-//      "message":"hotel deleted successfully"
-// })
-//     })
+
+    } catch (err) {
+        res.status(500).json({
+            status: 'Fail',
+            message: 'Failed to get a Document'
+        })
+    }
 }
 
 exports.checkHotelExists = (req,res,next,id) => {
@@ -125,4 +125,3 @@ exports.checkHotelExists = (req,res,next,id) => {
     // }
     // next();
 }
-
