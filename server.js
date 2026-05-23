@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const dns = require('dns');
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
-const connectionString = 'mongodb+srv://mohammedirfan:Irfan123@mongodb.jclgfxj.mongodb.net/bookmyhotel?appName=mongodb';
+const connectionString = 'mongodb+srv://username:password@mongodb.jclgfxj.mongodb.net/bookmyhotel?appName=mongodb';
 mongoose.connect(connectionString)
 
 .then((conn)=>{
