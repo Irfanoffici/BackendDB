@@ -1,17 +1,26 @@
-const fs = require('fs');
+// const fs = require('fs');
 
-const { Hotel } = require('../models/hotels');
-let hotels = JSON.parse(fs.readFileSync('./data/hotels.json', 'utf8'));
-exports.getAllHotels = (request,response)=>{
-    // response.status(200).json({
-    //     status:"success",
-    //     count:hotels.length,
-    //     data: {
-    //         hotelsList:hotels
-    //     }
-    // })
+const Hotel = require('../models/hotels');
+// let hotels = JSON.parse(fs.readFileSync('./data/hotels.json', 'utf8'));
+exports.getAllHotels = async (req, res) => {
+    try {
+        const hotels = await Hotel.find();
+        res.status(200).json({
+            status: 'success',
+            count: hotels.length,
+            data: {
+                hotels
+            }
+        })
+    } catch (error) {
+        res.status(500).json({
+            status: 'Fail',
+            message: 'Failed to load the data'
+        })
+    }
 }
-exports.createHotels = async (req, res) => {
+
+exports.createHotel = async (req, res) => {
     try {
         // const hotel = Hotel(req.body);
         // const newhotel = await hotel.save()
@@ -27,23 +36,23 @@ exports.createHotels = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             status: 'Fail',
-            message: 'Failed to create a Document'
+            message: error.message
         })
     }
 }
-exports.validateHotelData = (request,response,next) => {
+// exports.validateHotelData = (request,response,next) => {
 
-    // const body = request.body;
+//     // const body = request.body;
 
-    // if( !body.name || !body.city || !body.country || !body.pricePerNight ){
-    //     return response.status(400).json({
-    //         status:"fail",
-    //         message:"name, city, country and pricePerNight are required fields"
-    //     });
-    // }
-    // next();
+//     // if( !body.name || !body.city || !body.country || !body.pricePerNight ){
+//     //     return response.status(400).json({
+//     //         status:"fail",
+//     //         message:"name, city, country and pricePerNight are required fields"
+//     //     });
+//     // }
+//     next();
 
-}
+// }
 
 exports.getHotelById=(request,response)=>{
 // const id = +request.params.id*1

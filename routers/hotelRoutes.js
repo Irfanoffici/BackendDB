@@ -6,11 +6,11 @@ hotelRouter.param("id",hotelController.checkHotelExists)
 
 hotelRouter.route('/')
          .get(hotelController.getAllHotels)
-         .post(hotelController.validateHotelData, hotelController.createHotels)
+         .post(hotelController.createHotel)
 
 hotelRouter.route('/:id')
          .get(hotelController.getHotelById)
-         .put(hotelController.validateHotelData, hotelController.updatedHotel)
+         .put(hotelController.updatedHotel)
          .patch(hotelController.updatedHotel)
          .delete(hotelController.deleteHotel)
 

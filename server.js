@@ -18,6 +18,6 @@ mongoose.connect(connectionString)
 
 
 const port = 3000;
-app.listen(port,"localhost",()=>{
-    console.log("express.js server started");
+app.listen(port, 'localhost', () => {
+    console.log("Express js server started")
 })

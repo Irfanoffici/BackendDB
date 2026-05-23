@@ -33,7 +33,7 @@ const mongoose = require('mongoose');
      });
 
 
-hotel1.save()
+// hotel1.save()
 
 // const bookingSchema = new mongoose.Schema({
 //     userName: {
@@ -92,7 +92,4 @@ hotel1.save()
 
 //  booking1.save()
 
-module.exports = {
-    Hotel, 
-    hotelSchema
-};
+module.exports = Hotel;
