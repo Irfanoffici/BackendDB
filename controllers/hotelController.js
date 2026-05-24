@@ -54,11 +54,10 @@ exports.createHotel = async (req, res) => {
 
 // }
 
-exports.getHotelById = async (req, res) => {
-
-    try {
+exports.updatedHotel = async (req, res) => {
+    try{
         const id = req.params.id;
-        const hotel = await Hotel.findById(id);
+        const hotel = await Hotel.updateOne({ _id: id }, req.body);
         res.status(200).json({
             status: "success",
             data: {
